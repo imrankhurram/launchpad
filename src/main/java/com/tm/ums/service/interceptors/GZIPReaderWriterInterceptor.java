@@ -24,6 +24,7 @@ public class GZIPReaderWriterInterceptor implements ReaderInterceptor, WriterInt
 
     @Override
     public Object aroundReadFrom(ReaderInterceptorContext context) throws IOException {
+        System.out.println("reader interceptor");
         final InputStream originalInputStream = context.getInputStream();
         context.setInputStream(new GZIPInputStream(originalInputStream));
         return context.proceed();
@@ -31,6 +32,7 @@ public class GZIPReaderWriterInterceptor implements ReaderInterceptor, WriterInt
 
     @Override
     public void aroundWriteTo(WriterInterceptorContext responseContext) throws IOException {
+        System.out.println("writer interceptor");
         final OutputStream outputStream = responseContext.getOutputStream();
         responseContext.setOutputStream(new GZIPOutputStream(outputStream));
         responseContext.proceed();
